@@ -27,7 +27,7 @@ python -m venv venv
 Ativei o ambiente:
   ```bash
   venv\Scripts\activate
-  pip install -r requirements.txt
+  pip install -r requeriments.txt
   ```
 
 ### **1.4 Instalei as Dependências**
@@ -35,9 +35,9 @@ Instalei as bibliotecas utiizando os seguintes comandos:
 ```bash
 pip install selenium pandas python-dotenv
 ```
-Gerei o arquivo `requirements.txt`:
+Gerei o arquivo `requeriments.txt`:
 ```bash
-pip freeze > requirements.txt
+pip freeze > requeriments.txt
 ```
 
 ### **1.5 Configurei o WebDriver**
