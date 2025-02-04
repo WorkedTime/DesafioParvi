@@ -27,6 +27,7 @@ python -m venv venv
 Ativei o ambiente:
   ```bash
   venv\Scripts\activate
+  pip install -r requirements.txt
   ```
 
 ### **1.4 Instalei as Dependências**
