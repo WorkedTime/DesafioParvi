@@ -49,6 +49,7 @@ Extrai o arquivo e adicionei o `chromedriver.exe` na pasta `webdriver` do projet
 Crie a seguinte estrutura de diretórios para deixar o projeto mais organizado:
 ```
 📂 RPA_Quotes
+ ┣ 📂 venv              # Ambiente Virtual
  ┣ 📂 data              # Pasta para armazenar arquivos CSV
  ┣ 📂 webdriver         # Pasta para o ChromeDriver
  ┣ 📜 .env              # Credenciais para envio de e-mail
