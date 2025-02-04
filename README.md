@@ -1,8 +1,6 @@
 # **Desafio - RPA Python - Grupo Parvi**
 
-## **Objetivo**
-Este desafio tem como objetivo avaliar habilidades em programação Python, automação de processos e capacidade de resolução de problemas. O desafio será dividido em três partes:
-
+Etapas do Desafio
 1. **Web Scraping com Selenium**
 2. **Processamento de Dados com Pandas**
 3. **Envio de Relatório por E-mail (Extra)**
@@ -164,10 +162,6 @@ Iniciei o git:
 ```bash
 git init
 ```
-Adicionei os arquivos ao git:
-```bash
-git add .
-```
 Realizei o primeiro commit:
 ```bash
 git commit -m "Parvi commit"
@@ -175,9 +169,7 @@ git commit -m "Parvi commit"
 Adicionei o repositório:
 ```bash
 git remote add origin https://github.com/WorkedTime/DesafioParvi.git
-```
-Enviei os arquivos para o meu repositório:
-```bash
-git push -u origin master
+git branch -M main
+git push -u origin main
 ```
 Link do Repositorio do Git (https://github.com/WorkedTime/DesafioParvi.git)
