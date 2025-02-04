@@ -20,7 +20,7 @@ pip --version
 ```
 
 ### **1.3 Criei um Ambiente Virtual**
-Dentro do diretório do projeto, abri um terminal e executei o seguinte comando:
+Dentro do diretório do projeto, abri um terminal e executei o seguinte comando (é necessario o venv para executar o projeto):
 ```bash
 python -m venv venv
 ```
@@ -48,7 +48,6 @@ Extrai o arquivo e adicionei o `chromedriver.exe` na pasta `webdriver` do projet
 Crie a seguinte estrutura de diretórios para deixar o projeto mais organizado:
 ```
 📂 RPA_Quotes
- ┣ 📂 venv              # Ambiente virtual
  ┣ 📂 data              # Pasta para armazenar arquivos CSV
  ┣ 📂 webdriver         # Pasta para o ChromeDriver
  ┣ 📜 .env              # Credenciais para envio de e-mail
