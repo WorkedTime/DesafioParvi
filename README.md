@@ -5,7 +5,7 @@ Etapas do Desafio
 2. **Processamento de Dados com Pandas**
 3. **Envio de Relatório por E-mail (Extra)**
 
-## **Passo 1: Configurar o Ambiente de Desenvolvimento**
+## **Passo 1: Configurando o Ambiente de Desenvolvimento**
 
 ### **1.1 Instalei o python**
 
@@ -73,7 +73,7 @@ import csv
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
 
-url = "https://quotes.toscrape.com"
+url = "https://quotes.toscrape.com/js-delayed/"
 driver.get(url)
 
 time.sleep(5)
