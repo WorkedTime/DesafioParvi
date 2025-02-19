@@ -15,7 +15,7 @@ from email.message import EmailMessage
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
 
-url = "https://quotes.toscrape.com"
+url = "https://quotes.toscrape.com/js-delayed/"
 driver.get(url)
 
 time.sleep(5)
