@@ -25,7 +25,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 #4.Tratativa de erro caso a busca falhe, além de aviso e encerramento visível da função.
 #5.Cria o arquivo (csv)
 #6.Encerramento do Driver.   
-#''
+
 def encontrando_dados():
 
     service = Service(ChromeDriverManager().install()) #Faz download ou encontra o ChromeDriver adequado a versã instalada no sistema
@@ -37,7 +37,7 @@ def encontrando_dados():
 
     while True: #Executa enquanto o loop se mostrar verdadeiro
         try:
-    
+
             WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "quote"))) #Aguarda até que as citações sejam carregadas
 
             #Coleta as citações na página atual
@@ -70,6 +70,7 @@ def encontrando_dados():
     print("\nArquivo csv gerado com sucesso!")
 
 encontrando_dados()
+
 #Part II - Lendo arquivo CSV pós criado e tornando em lista literal
 #'''
 #1.Lê o arquivo(csv) e filtra por contagem(value_counts), maior repetição(idxmax), por lista(ast.literal_eval), por palavras inteiras(ast.literal_eval) e coloca como upper
@@ -90,11 +91,13 @@ def processando_dados():
     tag_mais_frequente = df["Tags"].apply(ast.literal_eval).explode().str.capitalize().value_counts().idxmax() #Lê os dados na coluna "Tags " do DataFrame e aplica a cada coluna uma forma segura de ler os dados como uma lista ou dicionário validando-os, depois os separa e lê cada uma das palavras armazenadas, além de deixar a primeira letra de cada palavra impressa maiúscula e fazendo sua contagem, revelando também a tag mais repetida
     print(f"Tag mais utilizada: {tag_mais_frequente}\n") #Mostra o resultado pós filtro acima do dado final
 
-    return {
+    return { #Usado para retornar os dados filtrados e processados para serem usados posteriormente
     'Citacoes':int(total_quotes),
     'Autor':autor_mais_frequente,
     'Tag':tag_mais_frequente
     }
+
+processando_dados()
 
 #Parte III - Enviando o relatório via e-mail (Extra)
 load_dotenv()
@@ -106,44 +109,47 @@ load_dotenv()
 #'''
 def enviar_email():
 
-    total = processando_dados()
-    conversor = ast.literal_eval(str(total))
+    total = processando_dados() #Uso da função processando_dados para obter os dados filtrados e processados
+    citacoes = (total["Citacoes"])
+    autor = (total["Autor"])
+    tags = (total["Tag"])
 
-    user = os.getenv("EMAIL")
-    password = os.getenv("PASS")
-    email_list = os.getenv("EMAIL_LIST")
+    user = os.getenv("EMAIL") #Obtém o e-mail do remetente a partir do arquivo .env
+    password = os.getenv("PASS") #Obtém a senha do remetente a partir do arquivo .env
+    email_list = os.getenv("EMAIL_LIST") #Obtém a lista de e-mails do destinatário a partir do arquivo .env
 
     if email_list: #Verifica se a variável está definida
         emails = email_list.split(",") #Cria a lista de e-mails usando o delimitador (vírgula neste caso)
 
-        for email in emails:
-            print(f"Sucesso! Enviado para: {email_list}")
+        for email in emails: # Remove espaços em branco desnecessários
+            print(f"Sucesso! Enviado para: {email_list}") #Exibe a lista de e-mails que receberão o relatório
     else:
-        print("A variável EMAIL_LIST não foi definida no arquivo .env.")
+        print("A variável EMAIL_LIST não foi definida no arquivo .env.") #Exibe mensagem de erro caso a variável não esteja definida
 
     if not user or not password:
-        print("Erro: EMAIL ou PASS não estão definidos no .env")
+        print("Erro: EMAIL ou PASS não estão definidos no .env") #Exibe mensagem de erro caso o e-mail ou a senha não estejam definidos no arquivo .env
         return
 
-    msg = EmailMessage()
+    #Envio de e-mail sendo remetente, destinatário e corpo da mensagem definidos
+    msg = EmailMessage() #Cria uma mensagem de e-mail
     msg['Subject'] = 'Relatório de Citações'
     msg['From'] = user
     msg['To'] = email_list
-    msg.set_content(f"Total gerado: {conversor}")
+    msg.set_content(f"O valor total gerado no arquivo csv é de: {citacoes} Citações\n O autor mais recorrente é: {autor}\n A tag mais utilizada é: {tags}") #Define o conteúdo do e-mail com os dados filtrados
 
     try:
-        with open("data/citacoes.csv", "rb") as f:
-            msg.add_attachment(f.read(), maintype='application', subtype='csv', filename="citacoes.csv")
+        with open("data/citacoes.csv", "rb") as f: #Abre o arquivo csv em modo leitura binária
+            msg.add_attachment(f.read(), maintype='application', subtype='csv', filename="citacoes.csv") #Adiciona o arquivo como anexo à mensagem de e-mail
     except FileNotFoundError:
-        print("Erro! Arquivo csv não encontrado.")
+        print("Erro! Arquivo csv não encontrado.") #Exibe mensagem de erro caso o arquivo csv não seja encontrado
         return
 
     try:
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login(user, password)
-            smtp.send_message(msg)
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp: #Cria uma conexão segura com o servidor SMTP do Gmail
+            smtp.login(user, password) #Faz login no servidor SMTP usando o e-mail e a senha
+            smtp.send_message(msg) #Envia a mensagem de e-mail
             print("\nE-mail enviado com sucesso!")
-    except Exception as e:
+    except Exception as e: #Exceção para capturar erros durante o envio do e-mail
         print(f"Falha ao enviar e-mail! \n {e}")
 
 enviar_email()
