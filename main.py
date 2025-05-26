@@ -18,8 +18,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 #Part I - Busca de dadps via URL e filtro de buscas
 
 #1.Instalação do driver do Chrome, além de baixar a versão mais recente para a sua máquina, iniciando o navegador e se conectando ao Selenium.
-#2.Acesso ao site com o driver.get e armazenando na lista quote_lists, executando o script em loop enquanto verdadeiro para encontro das citações por busca de elementos via name,
-#também manusendo com uso de except para qualquer erro de busca.
+#2.Acesso ao site com o driver.get e armazenando na lista quote_lists, executando o script em loop enquanto verdadeiro para encontro das citações por busca de elementos via name, também manusendo com uso de except para qualquer erro de busca.
 #3.Click de botão next para permanência de buscas em outras páginas do mesmo site.
 #4.Tratativa de erro caso a busca falhe, além de aviso e encerramento visível da função.
 #5.Cria o arquivo (csv)
@@ -72,8 +71,7 @@ encontrando_dados()
 
 #Part II - Lendo arquivo CSV pós criado e tornando em lista literal
 
-#1.Lê o arquivo(csv) e filtra por contagem(value_counts), maior repetição(idxmax), por lista(ast.literal_eval), por palavras inteiras(ast.literal_eval) e coloca como upper
-#a primeira letra das palavras listadas no arquivo(csv) criado  
+#1.Lê o arquivo(csv) e filtra por contagem(value_counts), maior repetição(idxmax), por lista(ast.literal_eval), por palavras inteiras(ast.literal_eval) e coloca como upper a primeira letra das palavras listadas no arquivo(csv) criado  
 #2.Imprime para o usuário o autor e tag mais frequentes dentro do arquivo(csv) gerado
 
 def processando_dados():
@@ -87,7 +85,7 @@ def processando_dados():
     print(f"Autor mais recorrente: {autor_mais_frequente}") #Mostra o resultado pós filtro do dado final
 
     tag_mais_frequente = df["Tags"].apply(ast.literal_eval).explode().str.capitalize().value_counts().idxmax() #Lê os dados na coluna "Tags " do DataFrame e aplica a cada coluna uma forma segura de ler os dados como uma lista ou dicionário validando-os, depois os separa e lê cada uma das palavras armazenadas, além de deixar a primeira letra de cada palavra impressa maiúscula e fazendo sua contagem, revelando também a tag mais repetida
-    print(f"Tag mais utilizada: {tag_mais_frequente}") #Mostra o resultado pós filtro acima do dado final
+    print(f"Tag mais utilizada: {tag_mais_frequente}\n") #Mostra o resultado pós filtro acima do dado final
 
     return { #Usado para retornar os dados filtrados e processados para serem usados posteriormente
     'Citacoes':int(total_quotes),
@@ -115,9 +113,11 @@ def enviar_email():
 
     if email_list: #Verifica se a variável está definida
         emails = email_list.split(",") #Cria a lista de e-mails usando o delimitador (vírgula neste caso)
+        print(emails)
 
-        for email in emails: # Remove espaços em branco desnecessários
+        for email in emails: #Remove espaços em branco desnecessários
             print(f"Sucesso! Enviado para: {email}") #Exibe a lista de e-mails que receberão o relatório
+            print(email)
     else:
         print("A variável EMAIL_LIST não foi definida no arquivo .env.") #Exibe mensagem de erro caso a variável não esteja definida
 
@@ -130,7 +130,7 @@ def enviar_email():
     msg['Subject'] = 'Relatório de Citações'
     msg['From'] = user
     msg['To'] = email_list
-    msg.set_content(f"O valor total gerado no arquivo csv é de: {citacoes} Citações\n O autor mais recorrente é: {autor}\n A tag mais utilizada é: {tags}") #Define o conteúdo do e-mail com os dados filtrados
+    msg.set_content(f"Os dados gerados do arquivo csv são: {citacoes} Citações\n O autor mais recorrente é: {autor}\n A tag mais utilizada é: {tags}") #Define o conteúdo do e-mail com os dados filtrados
 
     try:
         with open("data/citacoes.csv", "rb") as f: #Abre o arquivo csv em modo leitura binária
