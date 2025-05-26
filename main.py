@@ -17,7 +17,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 #Part I - Busca de dadps via URL e filtro de buscas
 
-#'''
 #1.Instalação do driver do Chrome, além de baixar a versão mais recente para a sua máquina, iniciando o navegador e se conectando ao Selenium.
 #2.Acesso ao site com o driver.get e armazenando na lista quote_lists, executando o script em loop enquanto verdadeiro para encontro das citações por busca de elementos via name,
 #também manusendo com uso de except para qualquer erro de busca.
@@ -72,11 +71,10 @@ def encontrando_dados():
 encontrando_dados()
 
 #Part II - Lendo arquivo CSV pós criado e tornando em lista literal
-#'''
+
 #1.Lê o arquivo(csv) e filtra por contagem(value_counts), maior repetição(idxmax), por lista(ast.literal_eval), por palavras inteiras(ast.literal_eval) e coloca como upper
 #a primeira letra das palavras listadas no arquivo(csv) criado  
 #2.Imprime para o usuário o autor e tag mais frequentes dentro do arquivo(csv) gerado
-#'''
 
 def processando_dados():
 
@@ -89,7 +87,7 @@ def processando_dados():
     print(f"Autor mais recorrente: {autor_mais_frequente}") #Mostra o resultado pós filtro do dado final
 
     tag_mais_frequente = df["Tags"].apply(ast.literal_eval).explode().str.capitalize().value_counts().idxmax() #Lê os dados na coluna "Tags " do DataFrame e aplica a cada coluna uma forma segura de ler os dados como uma lista ou dicionário validando-os, depois os separa e lê cada uma das palavras armazenadas, além de deixar a primeira letra de cada palavra impressa maiúscula e fazendo sua contagem, revelando também a tag mais repetida
-    print(f"Tag mais utilizada: {tag_mais_frequente}\n") #Mostra o resultado pós filtro acima do dado final
+    print(f"Tag mais utilizada: {tag_mais_frequente}") #Mostra o resultado pós filtro acima do dado final
 
     return { #Usado para retornar os dados filtrados e processados para serem usados posteriormente
     'Citacoes':int(total_quotes),
@@ -97,16 +95,13 @@ def processando_dados():
     'Tag':tag_mais_frequente
     }
 
-processando_dados()
 
 #Parte III - Enviando o relatório via e-mail (Extra)
 load_dotenv()
-#'''
+
 #1.Estabele o envio de dados(csv) para os destinatários inclusos no (.env) por meio de senha gerada pela google para a plataforma de envio e corpo de e-mail definido para se evitar erros
-#Uso de except para falhas e erros
-#2.
-#3.Envio de aviso caso o arquivo (csv) não seja encontrado
-#'''
+#2.Envio de aviso caso o arquivo (csv) não seja encontrado
+
 def enviar_email():
 
     total = processando_dados() #Uso da função processando_dados para obter os dados filtrados e processados
@@ -122,7 +117,7 @@ def enviar_email():
         emails = email_list.split(",") #Cria a lista de e-mails usando o delimitador (vírgula neste caso)
 
         for email in emails: # Remove espaços em branco desnecessários
-            print(f"Sucesso! Enviado para: {email_list}") #Exibe a lista de e-mails que receberão o relatório
+            print(f"Sucesso! Enviado para: {email}") #Exibe a lista de e-mails que receberão o relatório
     else:
         print("A variável EMAIL_LIST não foi definida no arquivo .env.") #Exibe mensagem de erro caso a variável não esteja definida
 
