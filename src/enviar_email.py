@@ -3,7 +3,8 @@ import os
 import smtplib
 from dotenv import load_dotenv
 from email.message import EmailMessage
-from processando_dados import processando_dados
+
+from src.processando_dados import processando_dados
 
 #Parte III - Enviando o relatório via e-mail (Extra)
 load_dotenv()
