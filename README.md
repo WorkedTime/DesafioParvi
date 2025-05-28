@@ -288,7 +288,7 @@ defenviar_email():
 
 ## **Passo 6: Após finalizar todo o andamento do projeto, versionei ele no meu git**
 
-Realizei a insalação e configuração do git na minha maquina
+Realizei a instalação e configuração do git na minha máquina:
 Iniciei o git:
 
 ```bash
