@@ -284,7 +284,7 @@ Adicionei o repositório:
 
 ```bash
 git remote add origin https://github.com/WorkedTime/DesafioParvi.git
-git branch -M main
+git branch -m main
 git push -u origin main --force
 ```
 
