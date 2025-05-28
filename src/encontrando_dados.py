@@ -37,7 +37,6 @@ def encontrando_dados():
             #Coleta as citações na página atual
             quotes = driver.find_elements(By.CLASS_NAME, "quote") #Encontra elementos com o nome "quote"
             for quote in quotes: #Loop for para repetição de busca
-                #texts = [texto.text for texto in quote.find_elements(By.CLASS_NAME, "text")] #Encontra elementos com o nome "text"
                 texts = [texto.text for texto in quote.find_elements(By.CLASS_NAME, "text")]
                 author = quote.find_element(By.CLASS_NAME, "author").text #Encontra elementos com o nome "author"
                 tags = [tag.text for tag in quote.find_elements(By.CLASS_NAME, "tag")]
