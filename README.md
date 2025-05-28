@@ -62,11 +62,11 @@ Criei a seguinte estrutura de diretórios para deixar o projeto mais organizado:
 
 ```
 📂 DESAFIOPARVI_1.1
- ┣ 📂 _pycache_         	# Arquivos compilados de módulos
+ ┣ 📂 _pycache_         	# Arquivos compilados de módulos - Oculto
  ┣ 📂 data              	# Pasta armazenando o arquivo CSV que foi gerado
     ┣ 📜 citacoes.csv      		# Armazenamento gerado dos arquivos de busca no CSV (Dentro da pasta data)
  ┣ 📂 src               	# Funções guardadas que serão chamadas pela main   
-    ┣ 📂 _pycache_         	# Arquivos compilados de módulos
+    ┣ 📂 _pycache_         	# Arquivos compilados de módulos - Oculto
     ┣ 📜 encontrando_dados.py  		# Função criada para busca de dados via Web e criação do CSV
     ┣ 📜 processar_dados.py		# Função criada para envio dos dados pós filtros e finalização de contagens para os e-mails cadastrados na lista do arquivo .env
     ┣ 📜 enviar_email.py		# Função criada para leitura e novo filtro de dados do CSV, além da criação do return {} para uso em outra função
