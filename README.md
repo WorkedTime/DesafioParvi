@@ -164,30 +164,23 @@ import pandas as pd
 #Part II - Lendo arquivo CSV pós criado e tornando em lista literal
 
 
-defprocessando_dados() -> dict:
+def processando_dados() -> dict:
 
-    df=pd.read_csv("data/citacoes.csv") #Determina que o DataFrame do Pandas busque e leia o arquivo csv gerado acima
+    df = pd.read_csv("data/citacoes.csv") #Determina que o DataFrame do Pandas busque e leia o arquivo csv gerado acima
 
-    total_quotes=df["Texto"].value_counts().count() #Lê os dados da coluna "Texto" no DataFrame e conta cada uma delas na lista
-
+    total_quotes = df["Texto"].value_counts().count() #Lê os dados da coluna "Texto" no DataFrame e conta cada uma delas na lista
     print(f"\nQuantidade total de citações: {total_quotes}") #Mostra a contagem de citações/textos
 
-    autor_mais_frequente=df["Autor"].value_counts().idxmax() #Lê os dados na coluna "Autor" no DataFrame e conta cada valor separadamente e também guarda o mais repetido
-
+    autor_mais_frequente = df["Autor"].value_counts().idxmax() #Lê os dados na coluna "Autor" no DataFrame e conta cada valor separadamente e também guarda o mais repetido
     print(f"Autor mais recorrente: {autor_mais_frequente}") #Mostra o resultado pós filtro do dado final
 
-    tag_mais_frequente=df["Tags"].apply(ast.literal_eval).explode().str.capitalize().value_counts().idxmax() #Lê os dados na coluna "Tags " do DataFrame e aplica a cada coluna uma forma segura de ler os dados como uma lista ou dicionário validando-os, depois os separa e lê cada uma das palavras armazenadas, além de deixar a primeira letra de cada palavra impressa maiúscula e fazendo sua contagem, revelando também a tag mais repetida
-
+    tag_mais_frequente = df["Tags"].apply(ast.literal_eval).explode().str.capitalize().value_counts().idxmax() #Lê os dados na coluna "Tags " do DataFrame e aplica a cada coluna uma forma segura de ler os dados como uma lista ou dicionário validando-os, depois os separa e lê cada uma das palavras armazenadas, além de deixar a primeira letra de cada palavra impressa maiúscula e fazendo sua contagem, revelando também a tag mais repetida
     print(f"Tag mais utilizada: {tag_mais_frequente}\n") #Mostra o resultado pós filtro acima do dado final
 
     return { #Usado para retornar os dados filtrados e processados para serem usados posteriormente
-
     'Citacoes':int(total_quotes),
-
     'Autor':autor_mais_frequente,
-
     'Tag':tag_mais_frequente
-
     }
 
 
@@ -208,82 +201,55 @@ from src.processando_dados import processando_dados
 
 
 #Parte III - Enviando o relatório via e-mail
-
-
 load_dotenv()
 
+#1.Estabele o envio de dados(csv) para os destinatários inclusos no (.env) por meio de senha gerada pela google para a plataforma de envio e corpo de e-mail definido para se evitar erros
+#2.Envio de aviso caso o arquivo (csv) não seja encontrado
 
-defenviar_email():
+def enviar_email():
 
-    total=processando_dados() #Uso da função processando_dados para obter os dados filtrados e processados
+    total = processando_dados() #Uso da função processando_dados para obter os dados filtrados e processados
+    citacoes = (total["Citacoes"])
+    autor = (total["Autor"])
+    tags = (total["Tag"])
 
-    citacoes= (total["Citacoes"])
+    user = os.getenv("EMAIL") #Obtém o e-mail do remetente a partir do arquivo .env
+    password = os.getenv("PASS") #Obtém a senha do remetente a partir do arquivo .env
+    email_list = os.getenv("EMAIL_LIST") #Obtém a lista de e-mails do destinatário a partir do arquivo .env
 
-    autor= (total["Autor"])
+    if email_list: #Verifica se a variável está definida
+        emails = email_list.split(",") #Cria a lista de e-mails usando o delimitador (vírgula neste caso)
 
-    tags= (total["Tag"])
-
-    user=os.getenv("EMAIL") #Obtém o e-mail do remetente a partir do arquivo .env
-
-    password=os.getenv("PASS") #Obtém a senha do remetente a partir do arquivo .env
-
-    email_list=os.getenv("EMAIL_LIST") #Obtém a lista de e-mails do destinatário a partir do arquivo .env
-
-    ifemail_list: #Verifica se a variável está definida
-
-    emails=email_list.split(",") #Cria a lista de e-mails usando o delimitador (vírgula neste caso)
-
-    foremailinemails: #Remove espaços em branco desnecessários
-
-    print(f"Sucesso! Enviado para: {email}") #Exibe a lista de e-mails que receberão o relatório
-
+    for email in emails: #Remove espaços em branco desnecessários
+            print(f"Sucesso! Enviado para: {email}") #Exibe a lista de e-mails que receberão o relatório
     else:
+        print("A variável EMAIL_LIST não foi definida no arquivo .env.") #Exibe mensagem de erro caso a variável não esteja definida
 
-    print("A variável EMAIL_LIST não foi definida no arquivo .env.") #Exibe mensagem de erro caso a variável não esteja definida
-
-    ifnotuserornotpassword:
-
-    print("Erro: EMAIL ou PASS não estão definidos no .env") #Exibe mensagem de erro caso o e-mail ou a senha não estejam definidos no arquivo .env
-
-    return
+    if not user or not password:
+        print("Erro: EMAIL ou PASS não estão definidos no .env") #Exibe mensagem de erro caso o e-mail ou a senha não estejam definidos no arquivo .env
+        return
 
     #Envio de e-mail sendo remetente, destinatário e corpo da mensagem definidos
-
-    msg=EmailMessage() #Cria uma mensagem de e-mail
-
-    msg['Subject'] ='Relatório de Citações'
-
-    msg['From'] =user
-
-    msg['To'] =email_list
-
+    msg = EmailMessage() #Cria uma mensagem de e-mail
+    msg['Subject'] = 'Relatório de Citações'
+    msg['From'] = user
+    msg['To'] = email_list
     msg.set_content(f"Arquivos gerados do CSV:\n Total de {citacoes} Citações\n O autor mais recorrente é: {autor}\n A tag mais utilizada é: {tags}") #Define o conteúdo do e-mail com os dados filtrados
 
     try:
-
-    withopen("data/citacoes.csv", "rb") asf: #Abre o arquivo csv em modo leitura binária
-
-    msg.add_attachment(f.read(), maintype='application', subtype='csv', filename="citacoes.csv") #Adiciona o arquivo como anexo à mensagem de e-mail
-
-    exceptFileNotFoundError:
-
-    print("Erro! Arquivo csv não encontrado.") #Exibe mensagem de erro caso o arquivo csv não seja encontrado
-
-    return
+        with open("data/citacoes.csv", "rb") as f: #Abre o arquivo csv em modo leitura binária
+            msg.add_attachment(f.read(), maintype='application', subtype='csv', filename="citacoes.csv") #Adiciona o arquivo como anexo à mensagem de e-mail
+    except FileNotFoundError:
+        print("Erro! Arquivo csv não encontrado.") #Exibe mensagem de erro caso o arquivo csv não seja encontrado
+        return
 
     try:
-
-    withsmtplib.SMTP_SSL('smtp.gmail.com', 465) assmtp: #Cria uma conexão segura com o servidor SMTP do Gmail
-
-    smtp.login(user, password) #Faz login no servidor SMTP usando o e-mail e a senha
-
-    smtp.send_message(msg) #Envia a mensagem de e-mail
-
-    print("\nE-mail enviado com sucesso!")
-
-    exceptExceptionase: #Exceção para capturar erros durante o envio do e-mail
-
-    print(f"Falha ao enviar e-mail! \n{e}")
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp: #Cria uma conexão segura com o servidor SMTP do Gmail
+            smtp.login(user, password) #Faz login no servidor SMTP usando o e-mail e a senha
+            smtp.send_message(msg) #Envia a mensagem de e-mail
+            print("\nE-mail enviado com sucesso!")
+    except Exception as e: #Exceção para capturar erros durante o envio do e-mail
+        print(f"Falha ao enviar e-mail! \n {e}")
 
 
 ## **Passo 6: Após finalizar todo o andamento do projeto, versionei ele no meu git**
