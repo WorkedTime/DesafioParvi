@@ -110,7 +110,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 def encontrando_dados():
 
     service = Service(ChromeDriverManager().install()) #Faz download ou encontra o ChromeDriver adequado a versã instalada no sistema
-    driver = webdriver.Chrome(service=service) #ChromeDriver -> Service que inicializa o navegador Chrome e se conecta ao Selenium parmitindo as automações
+    driver = webdriver.Chrome(service=service) #ChromeDriver -> Service que inicializa o navegador Chrome e se conecta ao Selenium            permitindo as automações
 
     busca = os.getenv("URL") #Obtém a URL do site a partir do arquivo .env
     driver.get(busca) #Acessa o site de busca de informações
@@ -120,7 +120,8 @@ def encontrando_dados():
     while True: #Executa enquanto o loop se mostrar verdadeiro
         try:
 
-    WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "quote"))) #Aguarda até que as citações sejam carregadas
+    WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "quote"))) #Aguarda até que as citações sejam 
+    carregadas
 
     #Coleta as citações na página atual
             quotes = driver.find_elements(By.CLASS_NAME, "quote") #Encontra elementos com o nome "quote"
@@ -132,7 +133,8 @@ def encontrando_dados():
                 print(f"{texts} - {author} - {tags}") #Mostra aquilo que está sendo encontrado nas tabelas de "text", "author" e "tag"
 
     #Tenta encontrar o botão "Next"
-            next_button = driver.find_element(By.CSS_SELECTOR, 'li.next > a') #Encontra e retorna um elemento`<a>`(link) que está dentro de um `<li>`(lista) com classe next(página ou item em lista)
+            next_button = driver.find_element(By.CSS_SELECTOR, 'li.next > a') #Encontra e retorna um elemento`<a>`(link) que está dentro 
+            de um `<li>`(lista) com classe next(página ou item em lista)
             next_button.click() #Faz a página sucessora ser clicada
 
     except (NoSuchElementException, TimeoutException):  #Erros que podem gerar esgotamento de tempo e de nenhum elemento encontrado
@@ -143,8 +145,12 @@ def encontrando_dados():
 
     print(f"\nTotal de citações coletadas: {len(quotes_list)}") #Exibe o total de citações extraídas
 
-    with open("data/citacoes.csv", mode="w", newline="", encoding="utf-8") as arquivo_csv: # with open forma de abrir e fechar arquivo de forma segura mesmo que ocorra erro | 'w' abre o arquivo no modo escrita e sobrescreve ou cria um novo | newline exita linhas em brancos extras | utf-8 define a codificação garantindo acentuação e caracteres especiais | as arquivo_csv representa o objeto do arquivo aberto
-        writer = csv.writer(arquivo_csv) #Função csv que cria um objeto gravador para escrita de dados | arquivo_csv é onde sera armazenado os dados | escreve linhas no arquivo csv
+    with open("data/citacoes.csv", mode="w", newline="", encoding="utf-8") as arquivo_csv: # with open forma de abrir e fechar arquivo de 
+    forma segura mesmo que ocorra erro | 'w' abre o arquivo no modo escrita e sobrescreve ou cria um novo | newline exita linhas em 
+    brancos extras | utf-8 define a codificação garantindo acentuação e caracteres especiais | as arquivo_csv representa o objeto do 
+    arquivo aberto
+        writer = csv.writer(arquivo_csv) #Função csv que cria um objeto gravador para escrita de dados | arquivo_csv é onde sera 
+    armazenado os dados | escreve linhas no arquivo csv
         writer.writerow(["Texto", "Autor", "Tags"]) #Cabeçalhos do arquivo.csv
         writer.writerows(quotes_list) #Escreve as linhas recebidas do arquivo gerado pela lista de busca
 
@@ -171,10 +177,14 @@ def processando_dados() -> dict:
     total_quotes = df["Texto"].value_counts().count() #Lê os dados da coluna "Texto" no DataFrame e conta cada uma delas na lista
     print(f"\nQuantidade total de citações: {total_quotes}") #Mostra a contagem de citações/textos
 
-    autor_mais_frequente = df["Autor"].value_counts().idxmax() #Lê os dados na coluna "Autor" no DataFrame e conta cada valor separadamente e também guarda o mais repetido
+    autor_mais_frequente = df["Autor"].value_counts().idxmax() #Lê os dados na coluna "Autor" no DataFrame e conta cada valor 
+    separadamente e também guarda o mais repetido
     print(f"Autor mais recorrente: {autor_mais_frequente}") #Mostra o resultado pós filtro do dado final
 
-    tag_mais_frequente = df["Tags"].apply(ast.literal_eval).explode().str.capitalize().value_counts().idxmax() #Lê os dados na coluna "Tags " do DataFrame e aplica a cada coluna uma forma segura de ler os dados como uma lista ou dicionário validando-os, depois os separa e lê cada uma das palavras armazenadas, além de deixar a primeira letra de cada palavra impressa maiúscula e fazendo sua contagem, revelando também a tag mais repetida
+    tag_mais_frequente = df["Tags"].apply(ast.literal_eval).explode().str.capitalize().value_counts().idxmax() #Lê os dados na coluna 
+    "Tags " do DataFrame e aplica a cada coluna uma forma segura de ler os dados como uma lista ou dicionário validando-os, depois os 
+    separa e lê cada uma das palavras armazenadas, além de deixar a primeira letra de cada palavra impressa maiúscula e fazendo sua 
+    contagem, revelando também a tag mais repetida
     print(f"Tag mais utilizada: {tag_mais_frequente}\n") #Mostra o resultado pós filtro acima do dado final
 
     return { #Usado para retornar os dados filtrados e processados para serem usados posteriormente
@@ -226,7 +236,8 @@ def enviar_email():
         print("A variável EMAIL_LIST não foi definida no arquivo .env.") #Exibe mensagem de erro caso a variável não esteja definida
 
     if not user or not password:
-        print("Erro: EMAIL ou PASS não estão definidos no .env") #Exibe mensagem de erro caso o e-mail ou a senha não estejam definidos no arquivo .env
+        print("Erro: EMAIL ou PASS não estão definidos no .env") #Exibe mensagem de erro caso o e-mail ou a senha não estejam definidos 
+        no arquivo .env
         return
 
     #Envio de e-mail sendo remetente, destinatário e corpo da mensagem definidos
@@ -234,11 +245,13 @@ def enviar_email():
     msg['Subject'] = 'Relatório de Citações'
     msg['From'] = user
     msg['To'] = email_list
-    msg.set_content(f"Arquivos gerados do CSV:\n Total de {citacoes} Citações\n O autor mais recorrente é: {autor}\n A tag mais utilizada é: {tags}") #Define o conteúdo do e-mail com os dados filtrados
+    msg.set_content(f"Arquivos gerados do CSV:\n Total de {citacoes} Citações\n O autor mais recorrente é: {autor}\n A tag mais utilizada 
+    é: {tags}") #Define o conteúdo do e-mail com os dados filtrados
 
     try:
         with open("data/citacoes.csv", "rb") as f: #Abre o arquivo csv em modo leitura binária
-            msg.add_attachment(f.read(), maintype='application', subtype='csv', filename="citacoes.csv") #Adiciona o arquivo como anexo à mensagem de e-mail
+            msg.add_attachment(f.read(), maintype='application', subtype='csv', filename="citacoes.csv") #Adiciona o arquivo como anexo à 
+            mensagem de e-mail
     except FileNotFoundError:
         print("Erro! Arquivo csv não encontrado.") #Exibe mensagem de erro caso o arquivo csv não seja encontrado
         return
