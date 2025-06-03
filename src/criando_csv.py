@@ -19,7 +19,7 @@ def criando_csv(lista_dados):
     else:
         print(f"\nDiretório {pasta} já existe.")
 
-    lista_dados["quotes"] = total_lista
+    total_lista = lista_dados["quotes"]
 
     try:
         with open(arquivo, mode="w", newline="", encoding="utf-8") as arquivo_csv:

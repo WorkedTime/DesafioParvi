@@ -1,24 +1,14 @@
 import os
 
 import smtplib
-from dotenv import load_dotenv
 from email.message import EmailMessage
-
 from src.processando_dados import processando_dados
 
 #Parte IV - Enviando o relatório via e-mail
-load_dotenv(override=True)
 
-def enviar_email():
+def enviar_email(remetente, senha, lista_email):
 
-    total = data("quotes")
-    citacoes = (total["Citacoes"])
-    autor = (total["Autor"])
-    tags = (total["Tag"])
-
-    user = os.getenv("EMAIL")
-    password = os.getenv("PASS")
-    email_list = os.getenv("EMAIL_LIST")
+    total = lista_dados["quotes"]
 
     if email_list:
         emails = email_list.split(",")
@@ -27,6 +17,13 @@ def enviar_email():
             print(f"Sucesso! Enviado para: {email}")
     else:
         print("A variável EMAIL_LIST não foi definida no arquivo .env.")
+
+    if user and password == True:
+        users = user.split(",")
+        passwords = password.split(",")
+    else: 
+        print("User ou password não listados corretamente na .env, encerrando run!")
+        return
 
     if not user or not password:
         print("Erro: EMAIL ou PASS não estão definidos no .env")
@@ -53,6 +50,7 @@ def enviar_email():
             print("\nE-mail enviado com sucesso! CONCLUIDO!!!")
     except Exception as e:
         print(f"Falha ao enviar e-mail! \n {e}")
+
     return {
         "status": "E-mail enviado com sucesso",
         "destinatarios": email_list

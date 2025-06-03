@@ -57,7 +57,7 @@ def encontrando_dados():
     print(f"\nTotal de citações coletadas: {len(quotes_list)}") 
     
     lista_dados = {
-        "quotes":quotes_list
+        "quotes": quotes_list
         }
 
     return lista_dados
