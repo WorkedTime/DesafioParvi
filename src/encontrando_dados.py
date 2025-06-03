@@ -20,7 +20,7 @@ def encontrando_dados():
     busca = os.getenv("URL")
     driver.get(busca)
 
-    quotes_list = []
+    quotes_list = {}
 
     while True:
         try:
@@ -37,8 +37,14 @@ def encontrando_dados():
                 print(f"{texts} - {author} - {tags}")
 
             #Tenta encontrar o botão "Next"
-            next_button = driver.find_element(By.CSS_SELECTOR, 'li.next > a')
-            next_button.click()
+            try:
+                next_button = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, 'li.next > a'))
+                )
+                next_button.click()
+            except TimeoutException:
+                print("\nFim da navegação ou botão 'Next' não encontrado.")
+                break
 
         except (NoSuchElementException, TimeoutException):
             print("\nNavegação finalizada por erro de tempo ou os elementos solicitados não foram encontrados!")
@@ -50,6 +56,4 @@ def encontrando_dados():
     driver.quit()
     print(f"\nTotal de citações coletadas: {len(quotes_list)}")
 
-    return{
-        "total":quotes_list
-        }
+    return {"quotes":quotes_list}

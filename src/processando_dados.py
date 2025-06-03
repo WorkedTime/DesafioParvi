@@ -1,7 +1,10 @@
 import ast
 import pandas as pd
 
+#Parte III - Processamento de dados pós buscas junto ao CSV
+
 def processando_dados() -> dict:
+    
     try:
         df = pd.read_csv("data/citacoes.csv")
 
@@ -21,8 +24,8 @@ def processando_dados() -> dict:
         }
 
     except FileNotFoundError:
-        print("Erro! Arquivo CSV não encontrado.")
-        #raise
+        print("\nErro! Arquivo CSV não encontrado.")
+        raise FileNotFoundError("\nO arquivo CSV não pode ser encontrado no caminho especificado")
     except Exception as e:
         print(f"\nOcorreu um erro inesperado: {e}")
-        #raise
+        raise RuntimeError("\nErro de execução!") from e

@@ -6,12 +6,12 @@ from email.message import EmailMessage
 
 from src.processando_dados import processando_dados
 
-#Parte III - Enviando o relatório via e-mail
+#Parte IV - Enviando o relatório via e-mail
 load_dotenv(override=True)
 
 def enviar_email():
 
-    #total = processando_dados()
+    total = data("quotes")
     citacoes = (total["Citacoes"])
     autor = (total["Autor"])
     tags = (total["Tag"])
