@@ -4,7 +4,7 @@ from src.encontrando_dados import encontrando_dados
 
 # Part II - Criação de CSV pós buscas na Web
 
-def criando_csv():
+def criando_csv(lista_dados):
     pasta = "data"
     arquivo = os.path.join(pasta, "citacoes.csv")
 
@@ -19,7 +19,7 @@ def criando_csv():
     else:
         print(f"\nDiretório {pasta} já existe.")
 
-        total_lista = total_dados("quotes")
+    lista_dados["quotes"] = total_lista
 
     try:
         with open(arquivo, mode="w", newline="", encoding="utf-8") as arquivo_csv:

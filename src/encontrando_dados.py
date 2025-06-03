@@ -20,7 +20,7 @@ def encontrando_dados():
     busca = os.getenv("URL")
     driver.get(busca)
 
-    quotes_list = {}
+    quotes_list = []
 
     while True:
         try:
@@ -54,6 +54,10 @@ def encontrando_dados():
             break
 
     driver.quit()
-    print(f"\nTotal de citações coletadas: {len(quotes_list)}")
+    print(f"\nTotal de citações coletadas: {len(quotes_list)}") 
+    
+    lista_dados = {
+        "quotes":quotes_list
+        }
 
-    return {"quotes":quotes_list}
+    return lista_dados
