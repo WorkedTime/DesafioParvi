@@ -1,6 +1,5 @@
 import os
 
-from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -10,9 +9,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
 
 #Part I - Busca de dadps via URL e filtro de buscas
-load_dotenv(override=True)
-
-def encontrando_dados():
+def encontrando_dados() -> None:
 
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
@@ -56,8 +53,6 @@ def encontrando_dados():
     driver.quit()
     print(f"\nTotal de citações coletadas: {len(quotes_list)}") 
     
-    lista_dados = {
-        "quotes": quotes_list
-        }
+    lista_dados = {"quotes": quotes_list}
 
     return lista_dados

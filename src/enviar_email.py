@@ -1,40 +1,24 @@
-import os
-
 import smtplib
+
 from email.message import EmailMessage
-from src.processando_dados import processando_dados
 
 #Parte IV - Enviando o relatório via e-mail
 
-def enviar_email(remetente, senha, lista_email):
+def enviar_email(remetente, senha, lista_email, mensagem):
 
-    total = lista_dados["quotes"]
-
-    if email_list:
-        emails = email_list.split(",")
+    if lista_email:
+        emails = lista_email.split(",")
 
         for email in emails:
-            print(f"Sucesso! Enviado para: {email}")
+            print(f"Enviando para: {email}")
     else:
         print("A variável EMAIL_LIST não foi definida no arquivo .env.")
 
-    if user and password == True:
-        users = user.split(",")
-        passwords = password.split(",")
-    else: 
-        print("User ou password não listados corretamente na .env, encerrando run!")
-        return
-
-    if not user or not password:
-        print("Erro: EMAIL ou PASS não estão definidos no .env")
-        return
-
-    #Envio de e-mail sendo remetente, destinatário e corpo da mensagem definidos
     msg = EmailMessage()
     msg['Subject'] = 'Relatório de Citações'
-    msg['From'] = user
-    msg['To'] = email_list
-    msg.set_content(f"Arquivos gerados do CSV:\n Total de {citacoes} Citações\n O autor mais recorrente é: {autor}\n A tag mais utilizada é: {tags}")
+    msg['From'] = remetente
+    msg['To'] = lista_email
+    msg.set_content(mensagem)
 
     try:
         with open("data/citacoes.csv", "rb") as f:
@@ -45,7 +29,7 @@ def enviar_email(remetente, senha, lista_email):
 
     try:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login(user, password)
+            smtp.login(remetente, senha)
             smtp.send_message(msg)
             print("\nE-mail enviado com sucesso! CONCLUIDO!!!")
     except Exception as e:
@@ -53,5 +37,5 @@ def enviar_email(remetente, senha, lista_email):
 
     return {
         "status": "E-mail enviado com sucesso",
-        "destinatarios": email_list
+        "destinatarios": lista_email
     }
