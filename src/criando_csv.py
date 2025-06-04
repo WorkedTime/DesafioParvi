@@ -1,23 +1,12 @@
 import csv
 import os
+
 from src.encontrando_dados import encontrando_dados
+from src.conferindo_pastas  import conferindo_pastas
 
-# Part II - Criação de CSV pós buscas na Web
+# Part III - Criação de CSV pós buscas na Web
 
-def criando_csv(lista_dados):
-    pasta = "data"
-    arquivo = os.path.join(pasta, "citacoes.csv")
-
-    #Verifica e cria a pasta se necessário
-    if not os.path.exists(pasta):
-        try:
-            os.mkdir(pasta)
-            print(f"\nDiretório {pasta} criado com sucesso!")
-        except Exception as e:
-            print(f"\nErro ao criar o diretório {pasta}: {e}")
-            return
-    else:
-        print(f"\nDiretório {pasta} já existe.")
+def criando_csv(lista_dados, pasta, arquivo):
 
     total_lista = lista_dados["quotes"]
 

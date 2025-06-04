@@ -1,4 +1,5 @@
 import ast
+
 import pandas as pd
 
 #Parte III - Processamento de dados pós buscas junto ao CSV

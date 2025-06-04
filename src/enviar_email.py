@@ -2,7 +2,7 @@ import smtplib
 
 from email.message import EmailMessage
 
-#Parte IV - Enviando o relatório via e-mail
+#Parte V - Enviando o relatório via e-mail
 
 def enviar_email(remetente, senha, lista_email, mensagem):
 
