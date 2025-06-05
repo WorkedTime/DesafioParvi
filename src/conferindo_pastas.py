@@ -1,24 +1,16 @@
 import os
 
 #Part II - Confere e cria pastas caso não sejam encontradas
+def conferindo_pastas(caminho_pasta="data"):
 
-def conferindo_pastas():
+    try:
+        if not os.path.exists(caminho_pasta):
+            os.makedirs(caminho_pasta)
+            print(f"\nDiretório '{caminho_pasta}' criado com sucesso!")
 
-    pasta = 'data'
-    arquivo = os.path.join(pasta, "")
+        if os.path.exists(caminho_pasta):
+            print(f"Arquivo {caminho_pasta} já existe!")
 
-    #Verifica e cria a pasta se necessário
-    if not os.path.exists(pasta):
-        try:
-            os.mkdir(pasta)
-            print(f"\nDiretório {pasta} criado com sucesso!")
-        except Exception as e:
-            print(f"\nErro ao criar o diretório {pasta}: {e}")
-            return
-    else:
-        print(f"\nDiretório {pasta} já existe.")
-
-        return pasta, arquivo
-    
-    #pasta no caminho atual 
-    #arquivo recebendo string para o nome novo
+    except Exception as e:
+        print(f"\nErro ao criar o diretório '{caminho_pasta}': {e}")
+        return 

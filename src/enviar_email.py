@@ -4,7 +4,7 @@ from email.message import EmailMessage
 
 #Parte V - Enviando o relatório via e-mail
 
-def enviar_email(remetente, senha, lista_email, mensagem):
+def enviar_email(remetente, senha, lista_email, mensagem, caminho_pasta):
 
     if lista_email:
         emails = lista_email.split(",")
@@ -21,7 +21,7 @@ def enviar_email(remetente, senha, lista_email, mensagem):
     msg.set_content(mensagem)
 
     try:
-        with open("data/citacoes.csv", "rb") as f:
+        with open(caminho_pasta, "rb") as f:
             msg.add_attachment(f.read(), maintype='application', subtype='csv', filename="citacoes.csv")
     except FileNotFoundError:
         print("Erro! Arquivo csv não encontrado.")

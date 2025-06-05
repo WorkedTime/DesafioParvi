@@ -1,4 +1,5 @@
 from selenium.webdriver.support import expected_conditions as EC
+
 from src.processando_dados import processando_dados
 
 #Part IV - Caso aja alteração do corpo do texto
