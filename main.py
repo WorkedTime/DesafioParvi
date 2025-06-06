@@ -21,7 +21,8 @@ def main():
     resultado = encontrando_dados()
     lista_citacoes = resultado["quotes"]
     # Part II - Conferência de pasta
-    nome_pasta = conferindo_pastas()
+    nome_pasta = "data"
+    conferindo_pastas()
     #Part III - Criação do CSV
     nome_arquivo = "citacoes.csv"
     criando_csv(lista_citacoes, nome_pasta=nome_pasta, nome_arquivo=nome_arquivo)

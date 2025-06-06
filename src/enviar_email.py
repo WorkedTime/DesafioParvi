@@ -11,7 +11,7 @@ def enviar_email(remetente: str, senha: str, lista_email: list, mensagem: str, n
         print("\nEmails não definidos no .env!")
         return
     for email in emails:
-        print(f"\nEnviado com sucesso para: {email}!")
+        print(f"Enviado com sucesso para: {email}!")
 
     msg = EmailMessage()
     msg['Subject'] = 'Relatório de Citações'
@@ -30,7 +30,7 @@ def enviar_email(remetente: str, senha: str, lista_email: list, mensagem: str, n
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(remetente, senha)
             smtp.send_message(msg)
-            print("\nTodas etapas aprovadas! CONCLUIDO!!!")
+            print("\nTodas as etapas aprovadas! CONCLUIDO!!!")
     except Exception as e:
         print(f"Falha ao enviar e-mail! \n {e}")
 
