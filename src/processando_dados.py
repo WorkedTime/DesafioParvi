@@ -6,7 +6,20 @@ import pandas as pd
 #Parte IV - Processamento de dados pós buscas junto ao CSV
 
 def processando_dados(nome_pasta="data", nome_arquivo="citacoes.csv") -> dict:
-    
+    """
+    Processa os dados do CSV, identificando:
+    - Total de citações
+    - Autor mais recorrente
+    - Tag mais usada
+
+    Args:
+        nome_pasta (str): Nome da pasta onde está o CSV.
+        nome_arquivo (str): Nome do arquivo CSV a ser lido.
+
+    Returns:
+        dict: Dicionário com os dados filtrados ('Citacoes', 'Autor', 'Tag').
+    """
+
     try:
         df = pd.read_csv(os.path.join(nome_pasta, nome_arquivo))
 

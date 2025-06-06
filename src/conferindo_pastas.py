@@ -2,6 +2,15 @@ import os
 
 #Part II - Confere e cria pastas caso não sejam encontradas
 def conferindo_pastas(caminho_pasta: str ="data") -> str:
+    """
+    Verifica se o diretório especificado existe. Caso contrário, cria o diretório.
+
+    Args:
+        caminho_pasta (str): Nome ou caminho da pasta a ser verificada/criada. Default é 'data'.
+
+    Returns:
+        str: Caminho da pasta criada ou existente.
+    """
 
     try:
         if not os.path.exists(caminho_pasta):

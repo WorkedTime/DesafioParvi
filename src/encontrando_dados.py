@@ -10,6 +10,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 #Part I - Busca de dados via URL e filtro de buscas
 def encontrando_dados() -> dict:
+    """
+    Realiza web scraping no site definido pela variável de ambiente 'URL',
+    coletando citações, autores e tags.
+
+    Returns:
+        dict: Um dicionário com a chave "quotes" contendo uma lista de tuplas (texto, autor, tags).
+    """
 
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
