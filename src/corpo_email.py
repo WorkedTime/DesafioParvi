@@ -1,6 +1,6 @@
 from src.processando_dados import processando_dados
 
-#Part IV - Caso aja alteração do corpo do texto
+#Part V - Caso aja alteração do corpo do texto
 
 def msg_corpo_email(total_dicionario: dict) -> str:
     

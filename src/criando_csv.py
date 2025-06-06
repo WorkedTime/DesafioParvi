@@ -1,7 +1,7 @@
 import csv
 import os
 
-#Part IV
+#Part III - Verificação e criação se necessário da pasta que guardará o arquivo
 
 from src.conferindo_pastas import conferindo_pastas
 
