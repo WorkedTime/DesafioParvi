@@ -1,14 +1,14 @@
 import ast
+import os
 
 import pandas as pd
-from src.conferindo_pastas import conferindo_pastas
 
 #Parte III - Processamento de dados pós buscas junto ao CSV
 
-def processando_dados(caminho_pasta) -> dict:
+def processando_dados(nome_pasta="data", nome_arquivo="citacoes.csv") -> dict:
     
     try:
-        df = pd.read_csv(caminho_pasta)
+        df = pd.read_csv(os.path.join(nome_pasta, nome_arquivo))
 
         total_quotes = df["Texto"].value_counts().count()
         print(f"\nQuantidade total de citações: {total_quotes}") 

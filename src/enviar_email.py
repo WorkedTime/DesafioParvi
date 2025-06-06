@@ -4,25 +4,24 @@ from email.message import EmailMessage
 
 #Parte V - Enviando o relatório via e-mail
 
-def enviar_email(remetente, senha, lista_email, mensagem, caminho_pasta):
+def enviar_email(remetente: str, senha: str, lista_email: list, mensagem: str, nome_arquivo: str):
 
-    if lista_email:
-        emails = lista_email.split(",")
-
-        for email in emails:
-            print(f"Enviando para: {email}")
-    else:
-        print("A variável EMAIL_LIST não foi definida no arquivo .env.")
+    emails = lista_email.split(",")
+    if not emails:
+        print("\nEmails não definidos no .env!")
+        return
+    for email in emails:
+        print(f"\nEnviado com sucesso para: {email}!")
 
     msg = EmailMessage()
     msg['Subject'] = 'Relatório de Citações'
     msg['From'] = remetente
-    msg['To'] = lista_email
+    msg['To'] = ",".join(emails)
     msg.set_content(mensagem)
 
     try:
-        with open(caminho_pasta, "rb") as f:
-            msg.add_attachment(f.read(), maintype='application', subtype='csv', filename="citacoes.csv")
+        with open(nome_arquivo, "rb") as f:
+            msg.add_attachment(f.read(), maintype='text', subtype='csv', filename="citacoes.csv")
     except FileNotFoundError:
         print("Erro! Arquivo csv não encontrado.")
         return
@@ -31,7 +30,7 @@ def enviar_email(remetente, senha, lista_email, mensagem, caminho_pasta):
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(remetente, senha)
             smtp.send_message(msg)
-            print("\nE-mail enviado com sucesso! CONCLUIDO!!!")
+            print("\nTodas etapas aprovadas! CONCLUIDO!!!")
     except Exception as e:
         print(f"Falha ao enviar e-mail! \n {e}")
 

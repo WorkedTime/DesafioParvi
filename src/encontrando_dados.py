@@ -8,14 +8,16 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
 
-#Part I - Busca de dadps via URL e filtro de buscas
-def encontrando_dados() -> None:
+#Part I - Busca de dados via URL e filtro de buscas
+def encontrando_dados() -> dict:
 
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
 
     busca = os.getenv("URL")
     driver.get(busca)
+    if not busca:
+        print("Erro: variável de ambiente 'URL' não está definida.")
 
     quotes_list = []
 
