@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ## 📦Preencha o arquivo `.env` com os dados:
 
 EMAIL=seuemail@gmail.com
-PASS=suasenha
+PASS=suasenha               
 EMAIL_LIST=destinatario1@gmail.com,destinatario2@gmail.com
 URL=http://quotes.toscrape.com/
 
@@ -43,13 +43,13 @@ python main.py
 ## 📁 Estrutura de Pastas:
 
 📦 DESAFIOPARVI_1.1
- ┣ 📂 data/
- ┣ 📂 src/
- ┣ 📜 main.py
- ┣ 📜 .env
- ┣ 📜 .env.example
- ┣ 📜 requirements.txt
- ┣ 📜 README.md
+ ┣ 📂 data/   
+ ┣ 📂 src/   
+ ┣ 📜 main.py    
+ ┣ 📜 .env      
+ ┣ 📜 .env.example        
+ ┣ 📜 requirements.txt       
+ ┣ 📜 README.md       
 
 ## 📤 Envio por E-mail:
 
