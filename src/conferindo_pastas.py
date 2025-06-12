@@ -17,7 +17,7 @@ def conferindo_pastas(caminho_pasta: str ="data") -> str:
             os.makedirs(caminho_pasta)
             print(f"\nDiretório '{caminho_pasta}' criado com sucesso!")
         else:
-            print(f"\nArquivo {caminho_pasta} já existe!")
+            print(f"\nArquivo '{caminho_pasta}' já existe!")
     except Exception as e:
         print(f"\nErro ao criar o diretório '{caminho_pasta}': {e}")
         return 
