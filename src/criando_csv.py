@@ -4,6 +4,8 @@ import os
 #Part III - Verificação e criação se necessário da pasta que guardará o arquivo
 
 from src.conferindo_pastas import conferindo_pastas
+#Organizar o busca_1 busca_2 e busca_3 - TODOS
+#Refazer as DOCSTRINGS - TODOS
 
 def criando_csv(lista_dados: dict, nome_pasta: str = "data", nome_arquivo: str = "citacoes.csv", busca_1: str = "Texto", busca_2: str = "Autor", busca_3: str = "Tags"):
     """

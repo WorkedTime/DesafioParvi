@@ -20,5 +20,4 @@ def conferindo_pastas(caminho_pasta: str ="data") -> str:
             print(f"\nArquivo '{caminho_pasta}' já existe!")
     except Exception as e:
         print(f"\nErro ao criar o diretório '{caminho_pasta}': {e}")
-        return 
-    
+        return

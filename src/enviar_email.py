@@ -4,11 +4,12 @@ from email.message import EmailMessage
 
 #Parte VI - Enviando o relatório via e-mail
 
-def enviar_email(remetente: str, senha: str, lista_email: list, mensagem: str, nome_arquivo: str):
+def enviar_email(remetente: str, senha: str, lista_email: list, mensagem: str, nome_arquivo: str) -> None:
     """
     Envia um e-mail com os dados processados e o arquivo em anexo.
 
     Args:
+    
         remetente (str): Endereço de e-mail do remetente.
         senha (str): Senha ou app-password do remetente.
         lista_email (list): Lista de destinatários separados por vírgula.
@@ -34,7 +35,7 @@ def enviar_email(remetente: str, senha: str, lista_email: list, mensagem: str, n
 
     try:
         with open(nome_arquivo, "rb") as f:
-            msg.add_attachment(f.read(), maintype='text', subtype='csv', filename="citacoes.csv")
+            msg.add_attachment(f.read(), maintype='text', subtype='csv', filename=nome_arquivo)
     except FileNotFoundError:
         print("Erro! Arquivo csv não encontrado.")
         return

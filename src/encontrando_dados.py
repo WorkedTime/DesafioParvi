@@ -68,6 +68,6 @@ def encontrando_dados(element: str = "quote" , busca_1: str = "text", busca_2: s
     driver.quit()
     print(f"\nTotal de citações coletadas: {len(quotes_list)}") 
     
-    lista_dados = {"quotes": quotes_list}
+    lista_dados = {element: quotes_list}
 
     return lista_dados
